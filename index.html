@@ -1,0 +1,2084 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Q-Core 宣传手册</title>
+  <meta name="description" content="从 Q-Core 课程介绍 PDF / PPTX 提炼出的翻页式 HTML 宣传手册">
+  <style>
+    :root {
+      --bg-deep: #0d1b2a;
+      --bg-mid: #14273d;
+      --paper: #f6f1e7;
+      --paper-2: #efe6d6;
+      --ink: #102033;
+      --ink-soft: #4e5b6e;
+      --gold: #d8b56a;
+      --gold-2: #f0d8a0;
+      --redwood: #9a533a;
+      --teal: #214f59;
+      --olive: #5a6147;
+      --line: rgba(16, 32, 51, 0.12);
+      --shadow: rgba(5, 10, 18, 0.22);
+      --radius: 30px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      font-family: "Avenir Next", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: #eef3f9;
+      background:
+        radial-gradient(circle at 12% 15%, rgba(216, 181, 106, 0.14), transparent 18%),
+        radial-gradient(circle at 86% 18%, rgba(94, 141, 194, 0.14), transparent 22%),
+        linear-gradient(180deg, #16283f, #09121d 65%);
+      overflow: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      width: 28rem;
+      height: 28rem;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(18px);
+      opacity: 0.8;
+      z-index: 0;
+    }
+
+    body::before {
+      top: -10rem;
+      left: -8rem;
+      background: rgba(216, 181, 106, 0.12);
+    }
+
+    body::after {
+      right: -9rem;
+      bottom: -10rem;
+      background: rgba(75, 111, 169, 0.12);
+    }
+
+    .app {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 1rem;
+      padding: clamp(1rem, 1.6vw, 1.5rem);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.9rem 1.15rem;
+      border-radius: 24px;
+      background: rgba(10, 18, 29, 0.42);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.16);
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.18rem;
+    }
+
+    .brand-kicker {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(240, 243, 249, 0.64);
+    }
+
+    .brand-title {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: clamp(1.2rem, 2.2vw, 1.7rem);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: #fff;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .page-status {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      padding: 0.55rem 0.85rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: rgba(240, 243, 249, 0.78);
+    }
+
+    .page-status strong {
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+    }
+
+    button {
+      appearance: none;
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+      transition: transform 180ms ease, opacity 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button:disabled {
+      cursor: default;
+      opacity: 0.45;
+      transform: none;
+    }
+
+    .btn {
+      padding: 0.72rem 0.95rem;
+      border-radius: 14px;
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      color: #111c27;
+      background: linear-gradient(135deg, var(--gold-2), var(--gold));
+      box-shadow: 0 10px 24px rgba(216, 181, 106, 0.22);
+    }
+
+    .btn-secondary {
+      color: #eef3f9;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .stage {
+      min-height: 0;
+      display: grid;
+      place-items: center;
+    }
+
+    .book-frame {
+      width: min(100%, 1120px);
+      display: grid;
+      gap: 0.8rem;
+      justify-items: center;
+    }
+
+    .book-caption {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      color: rgba(238, 243, 249, 0.78);
+      font-size: 0.92rem;
+    }
+
+    .book-caption strong {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .book-shell {
+      position: relative;
+      width: min(100%, 980px);
+      aspect-ratio: 1.42 / 1;
+      perspective: 2600px;
+      user-select: none;
+    }
+
+    .book-shadow {
+      position: absolute;
+      inset: 5% 3% -7% 3%;
+      border-radius: 50px;
+      background:
+        radial-gradient(circle at center, rgba(0, 0, 0, 0.3), transparent 58%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.45));
+      filter: blur(30px);
+      opacity: 0.95;
+      pointer-events: none;
+    }
+
+    .book {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+    }
+
+    .sheet {
+      position: absolute;
+      inset: 0;
+      transform-origin: left center;
+      transform-style: preserve-3d;
+      transition: transform 920ms cubic-bezier(0.22, 0.84, 0.29, 1), filter 920ms ease;
+      filter: drop-shadow(18px 20px 20px rgba(0, 0, 0, 0.12));
+    }
+
+    .sheet.flipped {
+      transform: rotateY(-178deg);
+      filter: drop-shadow(-10px 16px 18px rgba(0, 0, 0, 0.12));
+    }
+
+    .sheet-face {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      border-radius: var(--radius);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+        0 18px 45px rgba(0, 0, 0, 0.14);
+    }
+
+    .sheet-front {
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .sheet-back {
+      transform: rotateY(180deg);
+      background:
+        linear-gradient(90deg, rgba(135, 111, 76, 0.18), transparent 8%, transparent 92%, rgba(79, 60, 34, 0.12)),
+        linear-gradient(180deg, #fbf8f1, #efe6d7);
+      color: var(--ink);
+    }
+
+    .sheet-back::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(180deg, rgba(16, 32, 51, 0.02), rgba(16, 32, 51, 0.02) 2px, transparent 2px, transparent 11px);
+      pointer-events: none;
+    }
+
+    .back-inner {
+      position: absolute;
+      inset: 0;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .back-mark {
+      display: inline-flex;
+      width: fit-content;
+      padding: 0.36rem 0.66rem;
+      border-radius: 999px;
+      border: 1px solid rgba(16, 32, 51, 0.12);
+      color: rgba(16, 32, 51, 0.62);
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .back-copy {
+      display: grid;
+      gap: 0.45rem;
+      max-width: 28rem;
+    }
+
+    .back-copy h2 {
+      margin: 0;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: clamp(1.7rem, 3vw, 2.5rem);
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    .back-copy p {
+      margin: 0;
+      color: rgba(16, 32, 51, 0.68);
+      line-height: 1.65;
+      font-size: 1rem;
+    }
+
+    .back-page {
+      align-self: flex-end;
+      font-size: 1.05rem;
+      color: rgba(16, 32, 51, 0.46);
+      letter-spacing: 0.12em;
+    }
+
+    .page {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+      background: var(--paper);
+      color: var(--ink);
+      overflow: hidden;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .page::after {
+      content: attr(data-page);
+      position: absolute;
+      right: 1.75rem;
+      bottom: 1.45rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(16, 32, 51, 0.44);
+    }
+
+    .theme-dark {
+      background:
+        radial-gradient(circle at top right, rgba(216, 181, 106, 0.18), transparent 26%),
+        linear-gradient(180deg, #13263b, #0d1726 65%);
+      color: #f7f4ec;
+    }
+
+    .theme-dark::before {
+      background:
+        linear-gradient(140deg, rgba(255, 255, 255, 0.06), transparent 26%),
+        radial-gradient(circle at 15% 85%, rgba(216, 181, 106, 0.08), transparent 24%);
+    }
+
+    .theme-dark::after {
+      color: rgba(255, 255, 255, 0.52);
+    }
+
+    .theme-sand {
+      background:
+        radial-gradient(circle at top left, rgba(216, 181, 106, 0.12), transparent 24%),
+        linear-gradient(180deg, #f8f1e5, #efe3d0);
+    }
+
+    .theme-sand::before {
+      background:
+        linear-gradient(115deg, rgba(154, 83, 58, 0.08), transparent 26%),
+        radial-gradient(circle at 85% 20%, rgba(33, 79, 89, 0.12), transparent 24%);
+    }
+
+    .theme-paper {
+      background:
+        linear-gradient(180deg, #fbf8f1, #f2eadc);
+    }
+
+    .theme-paper::before {
+      background:
+        radial-gradient(circle at 92% 15%, rgba(216, 181, 106, 0.14), transparent 18%);
+    }
+
+    .theme-olive {
+      background:
+        radial-gradient(circle at top right, rgba(216, 181, 106, 0.15), transparent 20%),
+        linear-gradient(180deg, #1a2f35, #0d1c20 70%);
+      color: #f5f0e7;
+    }
+
+    .theme-olive::after {
+      color: rgba(255, 255, 255, 0.54);
+    }
+
+    .kicker {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.42rem 0.78rem;
+      border-radius: 999px;
+      border: 1px solid rgba(16, 32, 51, 0.1);
+      background: rgba(255, 255, 255, 0.46);
+      color: rgba(16, 32, 51, 0.72);
+      font-size: 0.76rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .theme-dark .kicker,
+    .theme-olive .kicker {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .headline {
+      display: grid;
+      gap: 0.55rem;
+      max-width: 46rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .headline h1,
+    .headline h2 {
+      margin: 0;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-weight: 700;
+      line-height: 0.96;
+      letter-spacing: -0.04em;
+    }
+
+    .headline h1 {
+      font-size: clamp(3rem, 6vw, 4.9rem);
+    }
+
+    .headline h2 {
+      font-size: clamp(2.2rem, 4.4vw, 3.4rem);
+    }
+
+    .headline p {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.72;
+      color: rgba(16, 32, 51, 0.7);
+      max-width: 43rem;
+    }
+
+    .theme-dark .headline p,
+    .theme-olive .headline p {
+      color: rgba(247, 244, 236, 0.76);
+    }
+
+    .cover-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.85fr;
+      gap: 1.2rem;
+      align-items: stretch;
+      min-height: 0;
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover-left,
+    .cover-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .pill-row,
+    .stat-row,
+    .cta-points,
+    .feature-grid,
+    .three-grid,
+    .two-grid,
+    .price-grid,
+    .service-grid,
+    .action-grid,
+    .recap-grid {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .pill-row {
+      grid-template-columns: repeat(3, max-content);
+      gap: 0.55rem;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      display: inline-flex;
+      width: fit-content;
+      padding: 0.4rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: rgba(247, 244, 236, 0.84);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .stat-row {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .stat-card,
+    .quote-card,
+    .feature-card,
+    .lane-card,
+    .module-card,
+    .metric-card,
+    .panel-card,
+    .bio-card,
+    .price-card,
+    .service-card,
+    .action-card,
+    .recap-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      border: 1px solid rgba(16, 32, 51, 0.08);
+      background: rgba(255, 255, 255, 0.54);
+      box-shadow: 0 10px 28px rgba(16, 32, 51, 0.08);
+    }
+
+    .theme-dark .stat-card,
+    .theme-dark .quote-card,
+    .theme-dark .bio-card,
+    .theme-olive .panel-card,
+    .theme-olive .action-card,
+    .theme-olive .recap-card {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: none;
+    }
+
+    .stat-card {
+      padding: 1rem;
+      min-height: 10rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .stat-card strong {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 2.3rem;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      color: #fff;
+    }
+
+    .stat-card span {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: rgba(247, 244, 236, 0.72);
+    }
+
+    .quote-card {
+      padding: 1.2rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        linear-gradient(180deg, rgba(216, 181, 106, 0.22), rgba(216, 181, 106, 0.06)),
+        rgba(255, 255, 255, 0.06);
+    }
+
+    .quote-card blockquote {
+      margin: 0;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 1.65rem;
+      line-height: 1.22;
+      letter-spacing: -0.03em;
+    }
+
+    .quote-card p {
+      margin: 0;
+      color: rgba(247, 244, 236, 0.74);
+      line-height: 1.65;
+    }
+
+    .editorial-note {
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+      padding: 0.9rem 1rem;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: rgba(247, 244, 236, 0.8);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .feature-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      flex: 1;
+    }
+
+    .feature-card,
+    .lane-card,
+    .metric-card,
+    .price-card,
+    .service-card {
+      padding: 1.15rem;
+    }
+
+    .feature-card {
+      display: grid;
+      gap: 0.8rem;
+      grid-template-columns: 4.2rem 1fr;
+      align-items: start;
+    }
+
+    .feature-icon,
+    .module-icon,
+    .panel-icon,
+    .service-icon,
+    .recap-icon {
+      width: 3.8rem;
+      height: 3.8rem;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: rgba(216, 181, 106, 0.12);
+      border: 1px solid rgba(216, 181, 106, 0.18);
+    }
+
+    .feature-icon img,
+    .module-icon img,
+    .panel-icon img,
+    .service-icon img,
+    .recap-icon img {
+      max-width: 72%;
+      max-height: 72%;
+      object-fit: contain;
+    }
+
+    .feature-copy h3,
+    .lane-top h3,
+    .module-head h3,
+    .panel-head h3,
+    .bio-head h3,
+    .price-card h3,
+    .service-card h3,
+    .action-card h3,
+    .recap-card h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.3;
+    }
+
+    .feature-copy p,
+    .lane-card p,
+    .module-card p,
+    .metric-card p,
+    .panel-card p,
+    .bio-card p,
+    .price-card p,
+    .service-card p,
+    .action-card p,
+    .recap-card p {
+      margin: 0;
+      line-height: 1.65;
+      color: var(--ink-soft);
+      font-size: 0.94rem;
+    }
+
+    .page.theme-dark .feature-copy p,
+    .page.theme-dark .bio-card p,
+    .page.theme-olive .panel-card p,
+    .page.theme-olive .action-card p,
+    .page.theme-olive .recap-card p {
+      color: rgba(247, 244, 236, 0.74);
+    }
+
+    .pull-quote {
+      padding: 1rem 1.15rem;
+      border-left: 4px solid var(--gold);
+      background: rgba(216, 181, 106, 0.12);
+      border-radius: 16px;
+      color: var(--ink);
+      line-height: 1.72;
+      font-size: 1rem;
+    }
+
+    .lane-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.9rem;
+      flex: 1;
+    }
+
+    .lane-card {
+      display: grid;
+      gap: 0.9rem;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.46)),
+        #fff;
+    }
+
+    .lane-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .lane-badge,
+    .hours-badge,
+    .metric-badge,
+    .micro-badge,
+    .target-chip {
+      display: inline-flex;
+      width: fit-content;
+      padding: 0.34rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(16, 32, 51, 0.06);
+      border: 1px solid rgba(16, 32, 51, 0.08);
+      color: rgba(16, 32, 51, 0.72);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hours-badge {
+      background: rgba(216, 181, 106, 0.18);
+      border-color: rgba(216, 181, 106, 0.28);
+      color: #6d4c18;
+      font-weight: 600;
+    }
+
+    .lane-list,
+    .module-list,
+    .panel-list,
+    .bio-list,
+    .metric-list,
+    .service-list,
+    .action-list,
+    .recap-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .lane-list li,
+    .module-list li,
+    .panel-list li,
+    .bio-list li,
+    .metric-list li,
+    .service-list li,
+    .action-list li,
+    .recap-list li {
+      position: relative;
+      padding-left: 1rem;
+      line-height: 1.58;
+      color: var(--ink-soft);
+      font-size: 0.92rem;
+    }
+
+    .lane-list li::before,
+    .module-list li::before,
+    .panel-list li::before,
+    .bio-list li::before,
+    .metric-list li::before,
+    .service-list li::before,
+    .action-list li::before,
+    .recap-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.62rem;
+      width: 0.42rem;
+      height: 0.42rem;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 3px rgba(216, 181, 106, 0.14);
+    }
+
+    .theme-dark .bio-list li,
+    .theme-olive .panel-list li,
+    .theme-olive .action-list li,
+    .theme-olive .recap-list li {
+      color: rgba(247, 244, 236, 0.76);
+    }
+
+    .foot-note {
+      padding: 0.85rem 1rem;
+      border-radius: 18px;
+      background: rgba(16, 32, 51, 0.04);
+      border: 1px solid rgba(16, 32, 51, 0.06);
+      color: rgba(16, 32, 51, 0.72);
+      line-height: 1.65;
+      font-size: 0.92rem;
+    }
+
+    .theme-dark .foot-note,
+    .theme-olive .foot-note {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.08);
+      color: rgba(247, 244, 236, 0.74);
+    }
+
+    .three-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      flex: 1;
+    }
+
+    .module-card,
+    .bio-card,
+    .action-card,
+    .recap-card {
+      padding: 1.15rem;
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .module-card {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.42)),
+        #fff;
+      align-content: start;
+    }
+
+    .module-art {
+      position: relative;
+      min-height: 9.8rem;
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(16, 32, 51, 0.06);
+    }
+
+    .module-art img.main-art {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .module-icon {
+      position: absolute;
+      left: 0.9rem;
+      top: 0.9rem;
+      width: 3.4rem;
+      height: 3.4rem;
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(6px);
+    }
+
+    .module-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+    }
+
+    .module-head h3 {
+      font-size: 1.12rem;
+    }
+
+    .module-metric {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 1.8rem;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      color: var(--redwood);
+    }
+
+    .theme-dark .module-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: none;
+    }
+
+    .metric-band {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.9rem;
+    }
+
+    .metric-card {
+      display: grid;
+      gap: 0.6rem;
+      align-content: start;
+    }
+
+    .metric-card strong {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 2.2rem;
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+    }
+
+    .metric-sub {
+      color: rgba(16, 32, 51, 0.58);
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .metric-layout {
+      display: grid;
+      grid-template-columns: 1.25fr 0.95fr;
+      gap: 0.95rem;
+      flex: 1;
+    }
+
+    .metric-board,
+    .target-board {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .target-board {
+      align-content: start;
+    }
+
+    .target-panel {
+      padding: 1.15rem;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.5));
+      border: 1px solid rgba(16, 32, 51, 0.08);
+      box-shadow: 0 10px 28px rgba(16, 32, 51, 0.08);
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .two-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      flex: 1;
+    }
+
+    .panel-card {
+      padding: 1.15rem;
+      display: grid;
+      gap: 0.9rem;
+      align-content: start;
+    }
+
+    .panel-head {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.9rem;
+      align-items: center;
+    }
+
+    .panel-icon {
+      width: 4rem;
+      height: 4rem;
+      background: rgba(216, 181, 106, 0.14);
+      border-color: rgba(216, 181, 106, 0.2);
+    }
+
+    .panel-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .bio-layout {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 1rem;
+      flex: 1;
+    }
+
+    .bio-card {
+      align-content: start;
+    }
+
+    .bio-head {
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .bio-head span {
+      color: rgba(247, 244, 236, 0.66);
+      font-size: 0.86rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .theme-dark .bio-head span {
+      color: rgba(247, 244, 236, 0.62);
+    }
+
+    .trust-quote {
+      padding: 1rem 1.15rem;
+      border-radius: 20px;
+      background: rgba(216, 181, 106, 0.14);
+      border: 1px solid rgba(216, 181, 106, 0.2);
+      color: rgba(247, 244, 236, 0.9);
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 1.3rem;
+      line-height: 1.28;
+    }
+
+    .price-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      flex: 1;
+    }
+
+    .price-card {
+      display: grid;
+      gap: 0.8rem;
+      align-content: start;
+    }
+
+    .price-tag {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 2.25rem;
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      color: var(--redwood);
+    }
+
+    .price-card.highlight {
+      background:
+        linear-gradient(180deg, rgba(216, 181, 106, 0.18), rgba(255, 255, 255, 0.68)),
+        #fff;
+      border-color: rgba(216, 181, 106, 0.22);
+      transform: translateY(-6px);
+    }
+
+    .service-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .service-card {
+      display: grid;
+      gap: 0.85rem;
+      align-content: start;
+    }
+
+    .service-icon {
+      width: 3.4rem;
+      height: 3.4rem;
+    }
+
+    .action-layout {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 1rem;
+      flex: 1;
+    }
+
+    .action-grid,
+    .recap-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .action-card,
+    .recap-card {
+      gap: 0.75rem;
+    }
+
+    .action-card h3,
+    .recap-card h3 {
+      color: #fff;
+    }
+
+    .action-card {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .action-top,
+    .recap-top {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    .recap-icon {
+      width: 3.2rem;
+      height: 3.2rem;
+      background: rgba(216, 181, 106, 0.18);
+      border-color: rgba(216, 181, 106, 0.22);
+    }
+
+    .bottom-bar {
+      display: flex;
+      gap: 0.65rem;
+      overflow: auto;
+      padding: 0.35rem;
+      border-radius: 22px;
+      background: rgba(10, 18, 29, 0.42);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(18px);
+    }
+
+    .bottom-bar::-webkit-scrollbar {
+      height: 7px;
+    }
+
+    .bottom-bar::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+    }
+
+    .toc-item {
+      flex: 0 0 auto;
+      min-width: 10rem;
+      text-align: left;
+      padding: 0.75rem 0.88rem;
+      border-radius: 18px;
+      color: rgba(238, 243, 249, 0.82);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid transparent;
+    }
+
+    .toc-item small {
+      display: block;
+      margin-bottom: 0.18rem;
+      color: rgba(238, 243, 249, 0.54);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .toc-item.is-active {
+      background: rgba(216, 181, 106, 0.12);
+      border-color: rgba(216, 181, 106, 0.22);
+      color: #fff7e8;
+    }
+
+    .tap-zone {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 16%;
+      z-index: 40;
+      padding: 0;
+      background: transparent;
+      border: 0;
+    }
+
+    .tap-zone.prev {
+      left: 0;
+      cursor: w-resize;
+    }
+
+    .tap-zone.next {
+      right: 0;
+      cursor: e-resize;
+    }
+
+    .tap-hint {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.82);
+      background: rgba(7, 10, 15, 0.24);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      pointer-events: none;
+    }
+
+    .tap-hint.prev {
+      left: 0.9rem;
+    }
+
+    .tap-hint.next {
+      right: 0.9rem;
+    }
+
+    .theme-dark .lane-list li,
+    .theme-dark .module-list li,
+    .theme-dark .foot-note,
+    .theme-dark .feature-copy p {
+      color: rgba(247, 244, 236, 0.76);
+    }
+
+    @media (max-width: 1024px) {
+      body {
+        overflow: auto;
+      }
+
+      .app {
+        min-height: auto;
+      }
+
+      .cover-grid,
+      .metric-layout,
+      .bio-layout,
+      .action-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-row,
+      .lane-grid,
+      .three-grid,
+      .price-grid,
+      .service-grid,
+      .metric-band,
+      .two-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar,
+      .book-caption {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .topbar-right {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .book-shell {
+        aspect-ratio: 0.82 / 1;
+      }
+
+      .page {
+        padding: 1.2rem;
+      }
+
+      .headline h1 {
+        font-size: clamp(2.35rem, 9vw, 3.4rem);
+      }
+
+      .headline h2 {
+        font-size: clamp(1.8rem, 7vw, 2.6rem);
+      }
+
+      .feature-grid,
+      .three-grid,
+      .stat-row,
+      .lane-grid,
+      .metric-band,
+      .price-grid,
+      .service-grid,
+      .two-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tap-zone {
+        width: 18%;
+      }
+
+      .tap-hint {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sheet,
+      button {
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-kicker">HTML brochure reconstructed from the source deck</span>
+        <div class="brand-title">AlphaEdge / Q-Core</div>
+      </div>
+      <div class="topbar-right">
+        <div class="page-status"><strong id="pageCounter">01 / 09</strong><span id="pageTitle">封面</span></div>
+        <div class="controls">
+          <button class="btn btn-secondary" id="prevBtn" type="button">上一页</button>
+          <button class="btn btn-primary" id="nextBtn" type="button">下一页</button>
+          <button class="btn btn-secondary" id="fullscreenBtn" type="button">全屏</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="stage">
+      <div class="book-frame">
+        <div class="book-caption">
+          <div><strong id="heroTitle">封面</strong> <span id="heroSubtitle">Q-Core：AlphaEdge量化面试辅导课程</span></div>
+          <div>点击左右边缘，或使用键盘 ← → / Home / End</div>
+        </div>
+
+        <div class="book-shell" id="bookShell">
+          <div class="book-shadow" aria-hidden="true"></div>
+          <button class="tap-zone prev" id="tapPrev" type="button" aria-label="上一页"></button>
+          <button class="tap-zone next" id="tapNext" type="button" aria-label="下一页"></button>
+          <div class="tap-hint prev" aria-hidden="true">←</div>
+          <div class="tap-hint next" aria-hidden="true">→</div>
+
+          <div class="book" id="book">
+            <article class="sheet" data-title="封面" data-subtitle="Q-Core：AlphaEdge量化面试辅导课程">
+              <div class="sheet-face sheet-front">
+                <section class="page theme-dark" data-page="01">
+                  <span class="kicker">Quant Interview Brochure</span>
+                  <div class="headline">
+                    <h1>Q-Core</h1>
+                    <p>为 Quant / Trader 岗位准备的系统化面试手册。把原始课件里的课程结构、模块信息、导师优势和服务方案，重写成更适合网页展示的宣传册版面。</p>
+                  </div>
+
+                  <div class="cover-grid">
+                    <div class="cover-left">
+                      <div class="pill-row">
+                        <span class="pill">QR / QT / QD</span>
+                        <span class="pill">1v1 定制</span>
+                        <span class="pill">真题驱动</span>
+                      </div>
+
+                      <div class="headline" style="max-width:34rem;">
+                        <h2>针对 Quant / Trader 的系统化面试准备方案</h2>
+                        <p>从技术夯实到冲刺 Mock，围绕“面试官真正会问什么”来组织学习路径，让准备更聚焦，也更接近真实招聘场景。</p>
+                      </div>
+
+                      <div class="stat-row">
+                        <article class="stat-card">
+                          <strong>90%</strong>
+                          <span>覆盖量化面试高频必考点，减少低效刷题时间。</span>
+                        </article>
+                        <article class="stat-card">
+                          <strong>20h</strong>
+                          <span>A+B 全流程跑通，形成从基础到冲刺的完整闭环。</span>
+                        </article>
+                        <article class="stat-card">
+                          <strong>3 年</strong>
+                          <span>支持暂停 / 恢复，贴合真实求职节奏与窗口期。</span>
+                        </article>
+                      </div>
+                    </div>
+
+                    <div class="cover-right">
+                      <article class="quote-card">
+                        <div class="back-mark">Editorial Angle</div>
+                        <blockquote>不是“题海战术”，而是把技术考点和真实面试方式一一对齐。</blockquote>
+                        <p>课程设计强调题目背后的知识框架、表达方式和答题节奏，而不是只追求刷题数量。</p>
+                      </article>
+
+                      <div class="editorial-note">
+                        <div style="font-size:1.4rem;line-height:1;">+</div>
+                        <div>适合应届 grads，以及 2-3 年 junior 跳槽阶段的候选人。内容覆盖数学、统计 / 机器学习、算法 / 编程、简历与 Mock 全链路。</div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="sheet-face sheet-back">
+                <div class="back-inner">
+                  <span class="back-mark">AlphaEdge / Page 01</span>
+                  <div class="back-copy">
+                    <h2>第一印象要像一本手册</h2>
+                    <p>这页概括了课程定位、适用方向和最核心的三个数字，让读者在几秒内理解 Q-Core 的主张。</p>
+                  </div>
+                  <div class="back-page">01</div>
+                </div>
+              </div>
+            </article>
+
+            <article class="sheet" data-title="为什么选择 AlphaEdge" data-subtitle="最精准的量化面试准备方案">
+              <div class="sheet-face sheet-front">
+                <section class="page theme-paper" data-page="02">
+                  <span class="kicker">Why AlphaEdge</span>
+                  <div class="headline">
+                    <h2>为什么选择 AlphaEdge</h2>
+                    <p>源课件里的四个核心卖点被重组成四张宣传卡片：真题驱动、实战经验、1v1 定制和高效备战。语气更像 brochure，但信息仍来自原始材料。</p>
+                  </div>
+
+                  <div class="feature-grid">
+                    <article class="feature-card">
+                      <div class="feature-icon"><img src="./assets/image8.png" alt=""></div>
+                      <div class="feature-copy">
+                        <h3>真题驱动体系</h3>
+                        <p>全程围绕“面试官真正会问什么”设计，覆盖 90% 高频必考点，拒绝低效刷题，把时间用在最关键的地方。</p>
+                      </div>
+                    </article>
+
+                    <article class="feature-card">
+                      <div class="feature-icon"><img src="./assets/image7.png" alt=""></div>
+                      <div class="feature-copy">
+                        <h3>实战经验支撑</h3>
+                        <p>导师来自 Top 投行与 Hedge Fund 量化研究一线，兼具候选人视角与面试官视角，知道评分细节和录用标准。</p>
+                      </div>
+                    </article>
+
+                    <article class="feature-card">
+                      <div class="feature-icon"><img src="./assets/image6.png" alt=""></div>
+                      <div class="feature-copy">
+                        <h3>1v1 深度定制</h3>
+                        <p>根据背景、目标岗位与短板动态调整训练重点，让课程内容真正贴合你的经历、表达方式与求职方向。</p>
+                      </div>
+                    </article>
+
+                    <article class="feature-card">
+                      <div class="feature-icon"><img src="./assets/image5.png" alt=""></div>
+                      <div class="feature-copy">
+                        <h3>高效备战</h3>
+                        <p>省去机构营销成本，把资源集中投入真题体系、深度辅导与持续答疑，追求更高的投入产出比。</p>
+                      </div>
+                    </article>
+                  </div>
+
+                  <div class="pull-quote">“直击核心考点”是这门课最重要的视觉和内容主线：每一页都在强调高频、真实、可落地。</div>
+                </section>
+              </div>
+              <div class="sheet-face sheet-back">
+                <div class="back-inner">
+                  <span class="back-mark">AlphaEdge / Page 02</span>
+                  <div class="back-copy">
+                    <h2>卖点需要更清晰地被看到</h2>
+                    <p>宣传页不只是罗列信息，而是帮助读者更快建立判断：为什么它比“刷题班”更值得投入。</p>
+                  </div>
+                  <div class="back-page">02</div>
+                </div>
+              </div>
+            </article>
+
+            <article class="sheet" data-title="课程体系架构" data-subtitle="从技术夯实到面试冲刺">
+              <div class="sheet-face sheet-front">
+                <section class="page theme-sand" data-page="03">
+                  <span class="kicker">Program Structure</span>
+                  <div class="headline">
+                    <h2>从技术夯实到面试冲刺</h2>
+                    <p>课程被整理为三个决策选项：先夯实技术、集中冲刺面试，或者直接走完整路径。这样更接近宣传手册里“方案选择”的阅读逻辑。</p>
+                  </div>
+
+                  <div class="lane-grid">
+                    <article class="lane-card">
+                      <div class="lane-top">
+                        <div>
+                          <div class="lane-badge">Track A</div>
+                          <h3>课程 A：技术能力训练营</h3>
+                        </div>
+                        <span class="hours-badge">14 小时</span>
+                      </div>
+                      <p>围绕量化岗位最常见的技术面内容，做系统训练与考点映射。</p>
+                      <ul class="lane-list">
+                        <li>数学 &amp; 金融数学</li>
+                        <li>统计建模 &amp; 机器学习</li>
+                        <li>算法 &amp; 编程</li>
+                        <li>独家高频真题题库，来源于真人面试积累</li>
+                      </ul>
+                    </article>
+
+                    <article class="lane-card">
+                      <div class="lane-top">
+                        <div>
+                          <div class="lane-badge">Track B</div>
+                          <h3>课程 B：进阶面试准备</h3>
+                        </div>
+                        <span class="hours-badge">6 小时</span>
+                      </div>
+                      <p>聚焦表达、项目与场景演练，让准备从“会做题”走向“会面试”。</p>
+                      <ul class="lane-list">
+                        <li>针对目标岗位重写简历结构</li>
+                        <li>挖掘技术亮点与项目包装</li>
+                        <li>全流程模拟面试 Mock</li>
+                        <li>1v1 点评与压力测试</li>
+                      </ul>
+                    </article>
+
+                    <article class="lane-card">
+                      <div class="lane-top">
+                        <div>
+                          <div class="lane-badge">Full Path</div>
+                          <h3>A + B 全流程跑通</h3>
+                        </div>
+                        <span class="hours-badge">20 小时</span>
+                      </div>
+                      <p>从基础学习到冲刺投递的完整闭环，也是最强的宣传册主打方案。</p>
+                      <ul class="lane-list">
+                        <li>技术训练 + 面试准备一体化</li>
+                        <li>全程 1v1 跟跑与答疑</li>
+                        <li>适合希望系统推进的候选人</li>
+                        <li>兼顾效率与完整度</li>
+                      </ul>
+                    </article>
+                  </div>
+
+                  <div class="foot-note">覆盖应届 grads 与 2-3 年 junior 跳槽阶段的核心面试题；内容从题目抽象为知识框架，同时训练进入团队后的基础能力。</div>
+                </section>
+              </div>
+              <div class="sheet-face sheet-back">
+                <div class="back-inner">
+                  <span class="back-mark">AlphaEdge / Page 03</span>
+                  <div class="back-copy">
+                    <h2>把课程做成“方案”而不是“课表”</h2>
+                    <p>宣传册阅读更偏决策型，所以这里用三个路径帮助读者快速对应自己的阶段和预算。</p>
+                  </div>
+                  <div class="back-page">03</div>
+                </div>
+              </div>
+            </article>
+
+            <article class="sheet" data-title="课程 A 技术能力训练营" data-subtitle="数学、统计 / ML、算法 / 编程三大模块">
+              <div class="sheet-face sheet-front">
+                <section class="page theme-dark" data-page="04">
+                  <span class="kicker">Course A Deep Dive</span>
+                  <div class="headline">
+                    <h2>课程 A：技术能力训练营</h2>
+                    <p>原始课件中分散在多页里的课程 A 内容，被重新组合成三个纵向模块，每一栏同时展示主题、时长、题量和训练方式。</p>
+                  </div>
+
+                  <div class="three-grid">
+                    <article class="module-card">
+                      <div class="module-art">
+                        <img class="main-art" src="./assets/image13.png" alt="">
+                        <div class="module-icon"><img src="./assets/image9.png" alt=""></div>
+                      </div>
+                      <div class="module-head">
+                        <h3>数学 &amp; 金融数学</h3>
+                        <div class="module-metric">5h</div>
+                      </div>
+                      <ul class="module-list">
+                        <li>概率论与衍生 brain teaser 的解题 trick</li>
+                        <li>随机过程到 BS 模型的理解链路</li>
+                        <li>期权定价的直觉与严谨推导</li>
+                        <li>以知识框架连接高频题型，而非只记结论</li>
+                      </ul>
+                    </article>
+
+                    <article class="module-card">
+                      <div class="module-art">
+                        <img class="main-art" src="./assets/image14.png" alt="">
+                        <div class="module-icon"><img src="./assets/image10.png" alt=""></div>
+                      </div>
+                      <div class="module-head">
+                        <h3>统计 &amp; 机器学习</h3>
+                        <div class="module-metric">4h</div>
+                      </div>
+                      <ul class="module-list">
+                        <li>从线性代数角度理解线性回归</li>
+                        <li>机器学习理论与必考模型</li>
+                        <li>强调建模假设、误差分析与表达逻辑</li>
+                        <li>把题目归类成可迁移的答题框架</li>
+                      </ul>
+                    </article>
+
+                    <article class="module-card">
+                      <div class="module-art">
+                        <img class="main-art" src="./assets/image15.png" alt="">
+                        <div class="module-icon"><img src="./assets/image11.png" alt=""></div>
+                      </div>
+                      <div class="module-head">
+                        <h3>算法 &amp; 编程</h3>
+                        <div class="module-metric">5h</div>
+                      </div>
+                      <ul class="module-list">
+                        <li>高频算法与数据结构梳理</li>
+                        <li>对标买方技术面的 live coding 训练</li>
+                        <li>Python / C++ 语法基础与数值计算实现</li>
+                        <li>覆盖 Leetcode 常见考察类型与变式</li>
+                      </ul>
+                    </article>
+                  </div>
+
+                  <div class="foot-note">课程 A 的核心不是“堆知识点”，而是把面试真题背后的知识地图讲清楚，并训练进入团队后会真正用到的基本功。</div>
+                </section>
+              </div>
+              <div class="sheet-face sheet-back">
+                <div class="back-inner">
+                  <span class="back-mark">AlphaEdge / Page 04</span>
+                  <div class="back-copy">
+                    <h2>模块需要同时看见“内容”和“感觉”</h2>
+                    <p>保留了原稿里的视觉素材，但页面结构已经换成 brochure 的栏目式阅读，更适合网页展示和滚动式理解。</p>
+                  </div>
+                  <div class="back-page">04</div>
+                </div>
+              </div>
+            </article>
+
+            <article class="sheet" data-title="题库与训练量" data-subtitle="用数字强化课程 A 的说服力">
+              <div class="sheet-face sheet-front">
+                <section class="page theme-paper" data-page="05">
+                  <span class="kicker">Training Density</span>
+                  <div class="headline">
+                    <h2>题库与训练量，决定备战效率</h2>
+                    <p>这页把原课件里的数字信息单独提炼出来。宣传手册里，读者往往会先看“训练强度”与“覆盖深度”，再决定是否继续往下读。</p>
+                  </div>
+
+                  <div class="metric-layout">
+                    <div class="metric-board">
+                      <div class="metric-band">
+                        <article class="metric-card">
+                          <div class="metric-badge">Prob / Brain Teaser</div>
+                          <strong>35</strong>
+                          <div class="metric-sub">原型题目</div>
+                          <p>5 小时专精训练，快速建立概率与 brain teaser 的解决套路。</p>
+                        </article>
+
+                        <article class="metric-card">
+                          <div class="metric-badge">Stats / ML</div>
+                          <strong>26</strong>
+                          <div class="metric-sub">基础题</div>
+                          <p>配合 75 道变式延伸，训练模型理解、假设判断和表达完整度。</p>
+                        </article>
+
+                        <article class="metric-card">
+                          <div class="metric-badge">Coding</div>
+                          <strong>55</strong>
+                          <div class="metric-sub">必刷题</div>
+                          <p>覆盖 quant / trader 常见技术面，进一步延伸到 100 道以上衍生题。</p>
+                        </article>
+                      </div>
+
+                      <div class="target-panel">
+                        <div class="micro-badge">Outcome Design</div>
+                        <ul class="metric-list">
+                          <li>题库来源于真实面试积累，不是拼凑的网络题单。</li>
+                          <li>关注概率建模、误差分析、优化方法与代码规范等核心能力。</li>
+                          <li>帮助学员在“会做题”之外，建立更接近实际工作的思考方式。</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div class="target-board">
+                      <div class="target-panel">
+                        <div class="micro-badge">Target Audience</div>
+                        <h3 style="margin:0;">谁最适合这套训练？</h3>
+                        <div class="chip-row">
+                          <span class="target-chip">应届 grads</span>
+                          <span class="target-chip">junior 跳槽</span>
+                          <span class="target-chip">QR / QT / QD</span>
+                        </div>
+                        <p>原课件特别强调：内容覆盖应届生与 2-3 年 junior 阶段的核心面试题，并把考点映射到进入团队后的真实工作能力。</p>
+                      </div>
+
+                      <div class="target-panel">
+                        <div class="micro-badge">Reading Note</div>
+                        <p>如果你要把这份 HTML 直接发给潜在学员，这一页会是非常强的“中段转化页”——数字清晰、结构直接、说服力高。</p>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="sheet-face sheet-back">
+                <div class="back-inner">
+                  <span class="back-mark">AlphaEdge / Page 05</span>
+                  <div class="back-copy">
+                    <h2>数字是宣传页里最有效的证据</h2>
+                    <p>题量、时长、适配人群和训练目标被单独拆出来后，读者更容易判断这是不是一套“真的能打”的课程体系。</p>
+                  </div>
+                  <div class="back-page">05</div>
+                </div>
+              </div>
+            </article>
+
+            <article class="sheet" data-title="课程 B 进阶面试准备" data-subtitle="简历、项目包装与 Mock">
+              <div class="sheet-face sheet-front">
+                <section class="page theme-olive" data-page="06">
+                  <span class="kicker">Course B Deep Dive</span>
+                  <div class="headline">
+                    <h2>课程 B：进阶面试准备</h2>
+                    <p>课程 B 的价值不在于“补课”，而在于把已有经历转成更强的面试表达。为此，这一页采用双面板结构，分别强调“内容包装”和“现场表现”。</p>
+                  </div>
+
+                  <div class="two-grid">
+                    <article class="panel-card">
+                      <div class="panel-head">
+                        <div class="panel-icon"><img src="./assets/image17.png" alt=""></div>
+                        <div>
+                          <h3>简历修改 &amp; 项目包装</h3>
+                          <div class="panel-meta">
+                            <span class="hours-badge">3 小时深度打磨</span>
+                            <span class="lane-badge">QR / QT / QD</span>
+                          </div>
+                        </div>
+                      </div>
+                      <ul class="panel-list">
+                        <li>针对目标岗位重写简历结构，突出核心竞争力。</li>
+                        <li>把科研型经历转化为更面试导向的技术叙事。</li>
+                        <li>无项目背景时，可提供可落地的项目模板。</li>
+                        <li>目标输出：一份高通过率简历 + 完整技术项目 story。</li>
+                      </ul>
+                    </article>
+
+                    <article class="panel-card">
+                      <div class="panel-head">
+                        <div class="panel-icon"><img src="./assets/image16.png" alt=""></div>
+                        <div>
+                          <h3>1v1 模拟面试 Mock</h3>
+                          <div class="panel-meta">
+                            <span class="hours-badge">3 小时实战演练</span>
+                            <span class="lane-badge">Live Feedback</span>
+                          </div>
+                        </div>
+                      </div>
+                      <ul class="panel-list">
+                        <li>全流程模拟：简历问答 + 技术题 + Brain Teaser + Coding。</li>
+                        <li>即时点评答题逻辑、表达方式与沟通专业度。</li>
+                        <li>通过压力测试提前暴露问题，减少真实面试的紧张感。</li>
+                        <li>目标输出：提升逻辑表达与整体通过率。</li>
+                      </ul>
+                    </article>
+                  </div>
+
+                  <div class="foot-note">如果课程 A 解决的是“你会不会”，课程 B 更像是在训练“你能不能把能力讲出来，并在现场稳定发挥出来”。</div>
+                </section>
+              </div>
+              <div class="sheet-face sheet-back">
+                <div class="back-inner">
+                  <span class="back-mark">AlphaEdge / Page 06</span>
+                  <div class="back-copy">
+                    <h2>真正的差距，常常出现在表达层</h2>
+                    <p>很多候选人并不是不会，而是不会把经历说得有方向、把技术题答得有结构。这一页专门服务这个痛点。</p>
+                  </div>
+                  <div class="back-page">06</div>
+                </div>
+              </div>
+            </article>
+
+            <article class="sheet" data-title="导师团队" data-subtitle="实战与学术的结合">
+              <div class="sheet-face sheet-front">
+                <section class="page theme-dark" data-page="07">
+                  <span class="kicker">Mentors & Credibility</span>
+                  <div class="headline">
+                    <h2>导师团队：实战与学术的结合</h2>
+                    <p>这页把原课件里的导师介绍重做成“双证据”结构：左边强调 Tuu 老师的一线经验与面试官视角，右边强调课程 A 导师组的学术与竞赛背景。</p>
+                  </div>
+
+                  <div class="bio-layout">
+                    <article class="bio-card">
+                      <div class="bio-head">
+                        <span>Course Designer</span>
+                        <h3>Tuu 老师</h3>
+                      </div>
+                      <ul class="bio-list">
+                        <li>在 Top 投行与 Hedge Fund 拥有多年量化研究经验。</li>
+                        <li>面试过几乎所有顶级机构，并拿过多个 Offer。</li>
+                        <li>承担过组内面试官工作，参与校招筛选与技术面试。</li>
+                        <li>深知什么样的候选人会被 pick up，也理解评分细节。</li>
+                        <li>亲自设计课程体系与真题题库，严格基于真实高频考点。</li>
+                      </ul>
+                      <div class="trust-quote">“不仅知道题怎么做，也知道面试官在听什么、在看什么、在筛什么。”</div>
+                    </article>
+
+                    <article class="bio-card">
+                      <div class="bio-head">
+                        <span>Course A Mentor Group</span>
+                        <h3>技术能力训练营专家组</h3>
+                      </div>
+                      <ul class="bio-list">
+                        <li>来自全球顶尖高校的 PhD 毕业生。</li>
+                        <li>具备国际数学 / 编程竞赛获奖背景，例如 IOI、IMO 等。</li>
+                        <li>与 Tuu 导师多轮共创并持续精修课程框架与题库。</li>
+                        <li>确保课程只讲量化面试必考题，而不是泛泛而谈。</li>
+                        <li>目标是让学员在硬实力层面达到一线量化岗位的准入标准。</li>
+                      </ul>
+                    </article>
+                  </div>
+                </section>
+              </div>
+              <div class="sheet-face sheet-back">
+                <div class="back-inner">
+                  <span class="back-mark">AlphaEdge / Page 07</span>
+                  <div class="back-copy">
+                    <h2>可信度必须被设计出来</h2>
+                    <p>课件里的导师介绍信息很多，但宣传册更需要抓重点，所以这里突出“经历、视角、共创、标准”四个关键词。</p>
+                  </div>
+                  <div class="back-page">07</div>
+                </div>
+              </div>
+            </article>
+
+            <article class="sheet" data-title="课程方案与服务保障" data-subtitle="价格、时长与长期支持">
+              <div class="sheet-face sheet-front">
+                <section class="page theme-paper" data-page="08">
+                  <span class="kicker">Plans & Support</span>
+                  <div class="headline">
+                    <h2>课程方案与服务保障</h2>
+                    <p>原课件里这部分是价格表加三个服务卖点。这里将其重构成更适合网页宣传的价格卡片 + 服务保障组合，方便一眼比较。</p>
+                  </div>
+
+                  <div class="price-grid">
+                    <article class="price-card">
+                      <div class="micro-badge">Option A</div>
+                      <h3>课程 A：技术能力训练营</h3>
+                      <p>14 小时 1v1，覆盖数学、统计 / 机器学习、算法 / 编程，以及独家真题题库。</p>
+                      <div class="price-tag">¥28,800</div>
+                    </article>
+
+                    <article class="price-card">
+                      <div class="micro-badge">Option B</div>
+                      <h3>课程 B：进阶面试准备</h3>
+                      <p>6 小时 1v1 + 项目指导 + 不限时答疑，聚焦简历、项目包装与 Mock。</p>
+                      <div class="price-tag">¥28,000</div>
+                    </article>
+
+                    <article class="price-card highlight">
+                      <div class="micro-badge">Best Value</div>
+                      <h3>A + B 全流程跑通</h3>
+                      <p>20 小时 + 全流程不限时答疑，完整技术训练 + 面试准备 + 全程 1v1 跟跑。</p>
+                      <div class="price-tag">¥49,800</div>
+                      <p style="color:#7c4a1e;font-weight:600;">组合方案 88 折</p>
+                    </article>
+                  </div>
+
+                  <div class="service-grid">
+                    <article class="service-card">
+                      <div class="service-icon"><img src="./assets/image18.png" alt=""></div>
+                      <h3>3 年有效期</h3>
+                      <p>支持暂停 / 恢复，适应不同求职节奏，让准备不被短期时间窗口绑死。</p>
+                    </article>
+
+                    <article class="service-card">
+                      <div class="service-icon"><img src="./assets/image19.png" alt=""></div>
+                      <h3>1v1 深度答疑</h3>
+                      <p>包含完整真题题库与持续答疑支持，帮助你把每个卡点真正消化掉。</p>
+                    </article>
+
+                    <article class="service-card">
+                      <div class="service-icon"><img src="./assets/image20.png" alt=""></div>
+                      <h3>极致性价比</h3>
+                      <p>资源重点投入在教学、题库和辅导质量，而不是营销包装与大班运营成本。</p>
+                    </article>
+                  </div>
+                </section>
+              </div>
+              <div class="sheet-face sheet-back">
+                <div class="back-inner">
+                  <span class="back-mark">AlphaEdge / Page 08</span>
+                  <div class="back-copy">
+                    <h2>价格页也要像品牌页</h2>
+                    <p>对网页宣传来说，服务保障和价格最好同页出现，这样读者在产生兴趣时可以直接完成比较与判断。</p>
+                  </div>
+                  <div class="back-page">08</div>
+                </div>
+              </div>
+            </article>
+
+            <article class="sheet" data-title="开启你的量化职业之路" data-subtitle="行动页与核心特色回顾">
+              <div class="sheet-face sheet-front">
+                <section class="page theme-olive" data-page="09">
+                  <span class="kicker">Call To Action</span>
+                  <div class="headline">
+                    <h2>开启你的量化职业之路</h2>
+                    <p>最后一页保留源课件里的行动导向：咨询、评估、启动。同时用更精炼的语言回顾四个核心特色，让整本手册在强 CTA 中结束。</p>
+                  </div>
+
+                  <div class="action-layout">
+                    <div class="action-grid">
+                      <article class="action-card">
+                        <div class="action-top">
+                          <div class="recap-icon"><img src="./assets/image21.png" alt=""></div>
+                          <h3>咨询课程详情，获取个性化方案</h3>
+                        </div>
+                        <p>先判断目标岗位、时间线和你最需要优先补齐的模块，再决定进入 A、B 或完整路径。</p>
+                      </article>
+
+                      <article class="action-card">
+                        <div class="action-top">
+                          <div class="recap-icon"><img src="./assets/image22.png" alt=""></div>
+                          <h3>发送简历，获取初步竞争力评估</h3>
+                        </div>
+                        <p>通过简历与经历诊断，快速看到你在技术、项目表达和求职定位上的差距。</p>
+                      </article>
+
+                      <article class="action-card">
+                        <div class="action-top">
+                          <div class="recap-icon"><img src="./assets/image23.png" alt=""></div>
+                          <h3>联系 Tuu 老师，正式开启准备</h3>
+                        </div>
+                        <p>让训练从“知道自己要准备什么”变成“每周都在往目标靠近”。</p>
+                      </article>
+                    </div>
+
+                    <div class="recap-grid">
+                      <article class="recap-card">
+                        <div class="recap-top">
+                          <div class="recap-icon"><img src="./assets/image24.png" alt=""></div>
+                          <h3>真题穿透训练</h3>
+                        </div>
+                        <p>覆盖 90% 必考点，把准备聚焦到真正高频的部分。</p>
+                      </article>
+
+                      <article class="recap-card">
+                        <div class="recap-top">
+                          <div class="recap-icon"><img src="./assets/image25.png" alt=""></div>
+                          <h3>分方向突破</h3>
+                        </div>
+                        <p>针对 QR / QT / QD 的不同面试重点做内容定制。</p>
+                      </article>
+
+                      <article class="recap-card">
+                        <div class="recap-top">
+                          <div class="recap-icon"><img src="./assets/image26.png" alt=""></div>
+                          <h3>1v1 定制化辅导</h3>
+                        </div>
+                        <p>实战导师全程跟跑，帮助你把短板一项项清掉。</p>
+                      </article>
+
+                      <article class="recap-card">
+                        <div class="recap-top">
+                          <div class="recap-icon"><img src="./assets/image27.png" alt=""></div>
+                          <h3>3 年有效期支持</h3>
+                        </div>
+                        <p>直到成功获得 Offer 之前，这套准备都可以持续服务你的节奏。</p>
+                      </article>
+                    </div>
+                  </div>
+
+                  <div class="editorial-note">投资你的未来，选择更高效的准备方案。这一版已经不再是“课件截图”，而是一份可以直接展示给潜在学员的 HTML 宣传手册。</div>
+                </section>
+              </div>
+              <div class="sheet-face sheet-back">
+                <div class="back-inner">
+                  <span class="back-mark">AlphaEdge / Page 09</span>
+                  <div class="back-copy">
+                    <h2>宣传册的终点，应该是行动</h2>
+                    <p>最后一页把“行动步骤”和“特色回顾”合并，确保读者在合上这本手册之前，已经知道下一步该做什么。</p>
+                  </div>
+                  <div class="back-page">09</div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <nav class="bottom-bar" id="toc"></nav>
+  </div>
+
+  <script>
+    const sheets = Array.from(document.querySelectorAll(".sheet"));
+    const book = document.getElementById("book");
+    const toc = document.getElementById("toc");
+    const pageCounter = document.getElementById("pageCounter");
+    const pageTitle = document.getElementById("pageTitle");
+    const heroTitle = document.getElementById("heroTitle");
+    const heroSubtitle = document.getElementById("heroSubtitle");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const tapPrev = document.getElementById("tapPrev");
+    const tapNext = document.getElementById("tapNext");
+    const fullscreenBtn = document.getElementById("fullscreenBtn");
+    const bookShell = document.getElementById("bookShell");
+
+    const state = {
+      current: 0,
+      total: sheets.length,
+      tocButtons: []
+    };
+
+    function pageNum(index) {
+      return String(index + 1).padStart(2, "0");
+    }
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
+
+    function buildToc() {
+      sheets.forEach((sheet, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "toc-item";
+        button.innerHTML = `<small>${pageNum(index)}</small>${sheet.dataset.title}`;
+        button.addEventListener("click", () => goTo(index));
+        toc.appendChild(button);
+        state.tocButtons.push(button);
+      });
+    }
+
+    function update() {
+      sheets.forEach((sheet, index) => {
+        const flipped = index < state.current;
+        sheet.classList.toggle("flipped", flipped);
+        sheet.style.zIndex = flipped ? index + 1 : state.total - index;
+      });
+
+      state.tocButtons.forEach((button, index) => {
+        button.classList.toggle("is-active", index === state.current);
+      });
+
+      const active = sheets[state.current];
+      pageCounter.textContent = `${pageNum(state.current)} / ${pageNum(state.total - 1)}`;
+      pageTitle.textContent = active.dataset.title;
+      heroTitle.textContent = active.dataset.title;
+      heroSubtitle.textContent = active.dataset.subtitle;
+
+      prevBtn.disabled = state.current === 0;
+      nextBtn.disabled = state.current === state.total - 1;
+      tapPrev.disabled = state.current === 0;
+      tapNext.disabled = state.current === state.total - 1;
+
+      const activeButton = state.tocButtons[state.current];
+      if (activeButton) {
+        activeButton.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+      }
+    }
+
+    function goTo(index) {
+      state.current = clamp(index, 0, state.total - 1);
+      update();
+    }
+
+    function next() {
+      goTo(state.current + 1);
+    }
+
+    function prev() {
+      goTo(state.current - 1);
+    }
+
+    async function toggleFullscreen() {
+      if (document.fullscreenElement) {
+        await document.exitFullscreen();
+        return;
+      }
+      if (bookShell.requestFullscreen) {
+        await bookShell.requestFullscreen();
+      }
+    }
+
+    prevBtn.addEventListener("click", prev);
+    nextBtn.addEventListener("click", next);
+    tapPrev.addEventListener("click", prev);
+    tapNext.addEventListener("click", next);
+    fullscreenBtn.addEventListener("click", toggleFullscreen);
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === "PageDown") {
+        event.preventDefault();
+        next();
+      }
+      if (event.key === "ArrowLeft" || event.key === "PageUp") {
+        event.preventDefault();
+        prev();
+      }
+      if (event.key === "Home") {
+        event.preventDefault();
+        goTo(0);
+      }
+      if (event.key === "End") {
+        event.preventDefault();
+        goTo(state.total - 1);
+      }
+      if (event.key.toLowerCase() === "f") {
+        toggleFullscreen();
+      }
+    });
+
+    buildToc();
+    update();
+  </script>
+</body>
+</html>
